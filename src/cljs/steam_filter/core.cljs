@@ -38,11 +38,8 @@
      "This is going to be an awesome journey"]]])
 
 (defn home-page []
-  [:div.container
-   (when-let [docs @(rf/subscribe [:docs])]
-     [:div.row>div.col-sm-12
-      [:div {:dangerouslySetInnerHTML
-             {:__html (md->html docs)}}]])])
+  "Home page")
+
 
 (def pages
   {:home #'home-page
