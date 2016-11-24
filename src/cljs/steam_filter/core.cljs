@@ -35,7 +35,7 @@
   [:div.container
    [:div.row
     [:div.col-md-12
-     "this is the story of steam-filter... work in progress"]]])
+     "This is going to be an awesome journey"]]])
 
 (defn home-page []
   [:div.container
@@ -76,15 +76,11 @@
 
 ;; -------------------------
 ;; Initialize app
-(defn fetch-docs! []
-  (GET (str js/context "/docs") {:handler #(rf/dispatch [:set-docs %])}))
-
 (defn mount-components []
   (r/render [#'page] (.getElementById js/document "app")))
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
   (load-interceptors!)
-  (fetch-docs!)
   (hook-browser-navigation!)
   (mount-components))
