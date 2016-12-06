@@ -38,7 +38,7 @@
      "This is going to be an awesome journey"]]])
 
 (defn home-page []
-  "Home page")
+  [:div "Home page"])
 
 
 (def pages

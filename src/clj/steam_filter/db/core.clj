@@ -1,25 +1,7 @@
 (ns steam-filter.db.core
-    (:require [monger.core :as mg]
-              [monger.collection :as mc]
-              [monger.operators :refer :all]
-              [mount.core :refer [defstate]]
-              [steam-filter.config :refer [env]]))
+  (:require [steam-filter.db.interface :as db]
+            [steam-filter.db.steam :as api]))
 
-(defstate db*
-  :start (-> env :database-url mg/connect-via-uri)
-  :stop (-> db* :conn mg/disconnect))
-
-(defstate db
-  :start (:db db*))
-
-(defn create-user [user]
-  (mc/insert db "users" user))
-
-(defn update-user [id first-name last-name email]
-  (mc/update db "users" {:_id id}
-             {$set {:first_name first-name
-                    :last_name last-name
-                    :email email}}))
-
-(defn get-user [id]
-  (mc/find-one-as-map db "users" {:_id id}))
+(defn update-games []
+  (doseq [game api/games-list]
+    (db/upsert-game (api/get-game-details (:appid game)))))
